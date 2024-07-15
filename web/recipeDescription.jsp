@@ -6,28 +6,27 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Recipe Description</title>
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <style>
             body {
                 margin: 0;
-                padding: 0;
+                padding: 60px 0 0;
                 font-family: sans-serif;
                 background: linear-gradient(to right, #f7cac9, #dec2cb, #c5b9cd, #abb1cf, #92a8d1);
             }
 
-            /* Header styling */
-            .header {
+            .header, .nav {
                 color: white;
                 padding: 20px 0;
                 text-align: center;
             }
 
-            /* Navigation bar styling */
             .nav {
-                color: white;
-                padding: 10px 0;
+                position: fixed;
+                top: 0;
+                width: 100%;
+                padding: 30px 0;
                 text-align: right;
+                z-index: 1000;
             }
 
             .nav ul {
@@ -44,7 +43,6 @@
             .nav a {
                 color: white;
                 text-decoration: none;
-                text-align: left;
             }
 
             .nav a:hover {
@@ -54,7 +52,7 @@
             .recipe-container-ii {
                 display: flex;
                 flex-direction: column;
-                width: 80%; /* Adjust width as needed */
+                width: 80%;
                 margin: 10px auto 50px;
                 padding: 20px 50px 50px;
                 border: 1px solid #ddd;
@@ -63,35 +61,41 @@
                 justify-content: center;
                 align-items: center;
             }
+
             .heading-class {
                 text-align: center;
-                font-size: 50px; /* Adjust font size as needed */
-                margin-bottom: 20px; /* Add space below the heading */
+                font-size: 50px;
+                margin-bottom: 20px;
             }
+
             .container-box {
                 display: flex;
                 width: 100%;
                 justify-content: space-between;
             }
+
             .img-position {
                 flex: 1;
-                margin-right: 20px; /* Space between image and text */
+                margin-right: 40px;
             }
+
             .img-position img {
                 width: 100%;
-                height: auto; /* Maintain aspect ratio */
+                height: auto;
             }
+
             .text-container {
                 flex: 2;
                 text-align: justify;
             }
+
             .text-container h3, .text-container p {
-                margin-bottom: 10px; /* Space between each content item */
+                margin-bottom: 30px;
             }
+
             .button {
-                background-color: #04AA6D;
+                background-color: #58a2bb;
                 border: none;
-                color: white;
                 padding: 16px 32px;
                 text-align: center;
                 text-decoration: none;
@@ -99,94 +103,71 @@
                 font-size: 16px;
                 font-family: inherit;
                 margin: 4px 2px;
-                transition-duration: 0.4s;
                 cursor: pointer;
             }
-            .button2 {
-                background-color: #84b2c2;
+
+            .button:hover, .button2:hover {
+                background-color: #4a90a1;
                 color: black;
-                text-decoration: none;
             }
 
-            .button2:hover {
-                background-color: #58a2bb;
-                color: black;
-            }
-            .button button2 a {
-                padding: 0;
-                margin: 0;
-                border: none;
-                background-color: transparent;
-                color: transparent;
-                font-size: inherit;
-            }
-            .popup {
+            .modal {
                 display: none;
                 position: fixed;
-                top: 0;
+                z-index: 1;
                 left: 0;
+                top: 0;
                 width: 100%;
                 height: 100%;
-                background-color: rgba(255, 255, 255, 0.9);
-                z-index: 9999;
+                overflow: auto;
+                background-color: rgb(0,0,0);
+                background-color: rgba(0,0,0,0.4);
+                padding-top: 100px;
             }
 
-            .popup-content {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                width: 30%;
-                height: 50%;
-                transform: translate(-50%, -50%);
-                background-color: #ddd;
+            .modal-content {
+                background-color: #fefefe;
+                margin: auto;
                 padding: 20px;
-                border-radius: 20px;
+                border: 1px solid #888;
+                width: 30%;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+
+                position: absolute;
+                top: 40%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }
+
 
             .close {
-                position: absolute;
-                top: 10px;
-                right: 10px;
+                color: #aaaaaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: #000;
+                text-decoration: none;
                 cursor: pointer;
             }
 
-            form {
-                display: flex;
-                flex-direction: column;
-            }
-
-            label {
-                margin-bottom: 5px;
-            }
-
-            select, input {
-                margin-bottom: 10px;
-                height: 30px;
-            }
-
-            .popup button {
-                background-color: #84b2c2;
+            .submit-btn {
+                background-color: #4CAF50;
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
                 border: none;
-                color: black;
-                padding: 10px 20px;
                 cursor: pointer;
-                border-radius: 5px;
+                width: 100%;
             }
 
-            .popup button:hover {
-                background-color: #58a2bb;
-                color: black;
+            .submit-btn:hover {
+                background-color: #45a049;
             }
         </style>
-        <script>
-            function openPopup() {
-                document.getElementById("mealPlanPopup").style.display = "block";
-            }
-
-            function closePopup() {
-                document.getElementById("mealPlanPopup").style.display = "none";
-            }
-        </script>
     </head>
     <body>
         <header class="header">
@@ -200,10 +181,8 @@
             </nav>
         </header>
         <div class="recipe-container-ii">
-            <%
-                Recipe recipe = (Recipe) request.getAttribute("recipe");
-                if (recipe != null) {
-            %>
+            <% Recipe recipe = (Recipe) request.getAttribute("recipe");
+        if (recipe != null) {%>
             <h2 class="heading-class"><%= recipe.getRecipeName()%></h2>
             <div class="container-box">
                 <div class="img-position">
@@ -218,31 +197,30 @@
                     <p><%= recipe.getInstructions().replace("\n", "<br><br>")%></p>
                 </div>
             </div>
-            <button class="button" onclick="openPopup()">Add to meal plan</button>
-            <div id="mealPlanPopup" class="popup">
-                <div class="popup-content">
-                    <span class="close" onclick="closePopup()">&times;</span>
-                    <form action="addMealPlan.jsp" method="post">
+            <button class="button" onclick="document.getElementById('mealModal').style.display = 'block'">Add to meal plan</button>
+            <!-- The Modal -->
+            <div id="mealModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="document.getElementById('mealModal').style.display = 'none'">&times;</span>
+                    <form action="AddMealPlanServlet" method="post">
+                        <input type="hidden" name="recipeId" value="<%= recipe.getRecipeId()%>">
                         <label for="mealCategory">Meal Category:</label>
                         <select id="mealCategory" name="mealCategory">
                             <option value="breakfast">Breakfast</option>
                             <option value="lunch">Lunch</option>
                             <option value="snacks">Snacks</option>
                             <option value="dinner">Dinner</option>
-                        </select>
-                        <label for="mealDate">Select Date:</label>
-                        <input type="date" id="mealDate" name="mealDate" required>
-                        <button type="submit">Submit</button>
+                        </select><br><br>
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" name="date"><br><br>
+                        <input type="submit" class="submit-btn" value="Submit">
                     </form>
                 </div>
             </div>
-            <%
-            } else {
-            %>
+            <% } else { %>
             <p>Recipe not found.</p>
-            <%
-                }
-            %>
+            <% }%>
         </div>
     </body>
 </html>
+

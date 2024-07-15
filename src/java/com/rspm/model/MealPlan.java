@@ -8,7 +8,6 @@ public class MealPlan {
     private String category;
     private int recipeId;
     private String recipeName;
-    private String recipeImage;
 
     // Getters and setters
     public int getMealPlanId() {
@@ -57,13 +56,5 @@ public class MealPlan {
 
     public void setRecipeName(String recipeName) {
         this.recipeName = recipeName;
-    }
-
-    public String getRecipeImage() {
-        return recipeImage;
-    }
-
-    public void setRecipeImage(String recipeImage) {
-        this.recipeImage = recipeImage;
     }
 }

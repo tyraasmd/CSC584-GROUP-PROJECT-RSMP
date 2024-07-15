@@ -4,6 +4,14 @@
         <servlet-name>RegisterAccountServlet</servlet-name>
         <servlet-class>com.rspm.controller.RegisterAccountServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddMealPlanServlet</servlet-name>
+        <servlet-class>com.rspm.controller.AddMealPlanServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MealPlanServlet</servlet-name>
+        <servlet-class>com.rspm.controller.MealPlanServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterAccountServlet</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -28,10 +36,6 @@
         <servlet-name>RecipeListServlet</servlet-name>
         <servlet-class>com.rspm.controller.RecipeListServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>AddToMealPlanServlet</servlet-name>
-        <servlet-class>com.rspm.controller.AddToMealPlanServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>RecipeListServlet</servlet-name>
         <url-pattern>/RecipeListServlet</url-pattern>
@@ -45,8 +49,12 @@
         <url-pattern>/recipeDescription</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddToMealPlanServlet</servlet-name>
-        <url-pattern>/AddToMealPlanServlet</url-pattern>
+        <servlet-name>AddMealPlanServlet</servlet-name>
+        <url-pattern>/AddMealPlanServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MealPlanServlet</servlet-name>
+        <url-pattern>/MealPlanServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
