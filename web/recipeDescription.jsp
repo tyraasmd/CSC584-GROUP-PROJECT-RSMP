@@ -6,6 +6,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Recipe Description</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <style>
             body {
                 margin: 0;
@@ -60,7 +62,6 @@
                 background-color: #ddd;
                 justify-content: center;
                 align-items: center;
-                position: relative;
             }
             .heading-class {
                 text-align: center;
@@ -87,81 +88,103 @@
             .text-container h3, .text-container p {
                 margin-bottom: 10px; /* Space between each content item */
             }
-
-            /* Button styling */
-            .meal-plan-button {
-                margin-top: 20px;
-                padding: 10px 20px;
-                background-color: #296AAE;
-                color: white;
+            .button {
+                background-color: #04AA6D;
                 border: none;
-                border-radius: 5px;
-                cursor: pointer;
+                color: white;
+                padding: 16px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
                 font-size: 16px;
+                font-family: inherit;
+                margin: 4px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
+            }
+            .button2 {
+                background-color: #84b2c2;
+                color: black;
+                text-decoration: none;
             }
 
-            /* Popup styling */
+            .button2:hover {
+                background-color: #58a2bb;
+                color: black;
+            }
+            .button button2 a {
+                padding: 0;
+                margin: 0;
+                border: none;
+                background-color: transparent;
+                color: transparent;
+                font-size: inherit;
+            }
             .popup {
                 display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(255, 255, 255, 0.9);
+                z-index: 9999;
+            }
+
+            .popup-content {
                 position: absolute;
                 top: 50%;
                 left: 50%;
+                width: 30%;
+                height: 50%;
                 transform: translate(-50%, -50%);
-                background-color: white;
-                border: 1px solid #ddd;
-                border-radius: 5px;
+                background-color: #ddd;
                 padding: 20px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                z-index: 10;
+                border-radius: 20px;
             }
 
-            .popup h3 {
-                margin-top: 0;
+            .close {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
             }
 
-            .popup form {
+            form {
                 display: flex;
                 flex-direction: column;
             }
 
-            .popup label {
+            label {
                 margin-bottom: 5px;
             }
 
-            .popup select,
-            .popup input[type="date"],
-            .popup button {
+            select, input {
                 margin-bottom: 10px;
-                padding: 10px;
-                font-size: 16px;
+                height: 30px;
             }
 
             .popup button {
-                background-color: #296AAE;
-                color: white;
+                background-color: #84b2c2;
                 border: none;
-                border-radius: 5px;
+                color: black;
+                padding: 10px 20px;
                 cursor: pointer;
+                border-radius: 5px;
             }
 
-            .popup-close {
-                background-color: red;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                padding: 5px 10px;
-                margin-top: 10px;
-                align-self: flex-end;
+            .popup button:hover {
+                background-color: #58a2bb;
+                color: black;
             }
         </style>
         <script>
             function openPopup() {
-                document.getElementById('mealPlanPopup').style.display = 'block';
+                document.getElementById("mealPlanPopup").style.display = "block";
             }
 
             function closePopup() {
-                document.getElementById('mealPlanPopup').style.display = 'none';
+                document.getElementById("mealPlanPopup").style.display = "none";
             }
         </script>
     </head>
@@ -195,22 +218,23 @@
                     <p><%= recipe.getInstructions().replace("\n", "<br><br>")%></p>
                 </div>
             </div>
-            <button class="meal-plan-button" onclick="openPopup()">Add to meal plan</button>
+            <button class="button" onclick="openPopup()">Add to meal plan</button>
             <div id="mealPlanPopup" class="popup">
-                <h3>Add to Meal Plan</h3>
-                <form action="addToMealPlan" method="post">
-                    <label for="mealCategory">Meal Category:</label>
-                    <select id="mealCategory" name="mealCategory" required>
-                        <option value="breakfast">Breakfast</option>
-                        <option value="lunch">Lunch</option>
-                        <option value="snacks">Snacks</option>
-                        <option value="dinner">Dinner</option>
-                    </select>
-                    <label for="mealDate">Date:</label>
-                    <input type="date" id="mealDate" name="mealDate" required>
-                    <button type="submit">Submit</button>
-                </form>
-                <button class="popup-close" onclick="closePopup()">Close</button>
+                <div class="popup-content">
+                    <span class="close" onclick="closePopup()">&times;</span>
+                    <form action="addMealPlan.jsp" method="post">
+                        <label for="mealCategory">Meal Category:</label>
+                        <select id="mealCategory" name="mealCategory">
+                            <option value="breakfast">Breakfast</option>
+                            <option value="lunch">Lunch</option>
+                            <option value="snacks">Snacks</option>
+                            <option value="dinner">Dinner</option>
+                        </select>
+                        <label for="mealDate">Select Date:</label>
+                        <input type="date" id="mealDate" name="mealDate" required>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
             </div>
             <%
             } else {
