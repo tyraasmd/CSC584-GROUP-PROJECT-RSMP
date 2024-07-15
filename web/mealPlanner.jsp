@@ -149,6 +149,26 @@
                 <div id="calendar"></div>
             </div><br>
         </div>
+
+        <!-- Recipe Details Modal -->
+        <div id="recipeModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="modalTitle"></h4>
+                    </div>
+                    <div class="modal-body" id="modalBody">
+                        <!-- Recipe details will be loaded here dynamically -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="deleteButton">Delete</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             $(document).ready(function () {
                 $('#calendar').fullCalendar({
@@ -179,8 +199,45 @@
                         });
                     },
                     eventClick: function (event) {
-                        // Display modal or redirect to detailed view
-                        alert('Meal Plan: ' + event.title + '\nDate: ' + event.start.format('YYYY-MM-DD'));
+                        // Fetch recipe details and display in modal
+                        $.ajax({
+                            url: 'GetRecipeDetailsServlet',
+                            method: 'GET',
+                            data: {mealPlanId: event.id},
+                            success: function (response) {
+                                const ingredients = response.ingredients.replace(/\n/g, '<br><br>');
+                                const instructions = response.instructions.replace(/\n/g, '<br><br>');
+                                $('#modalTitle').text(response.recipeName);
+                                $('#modalBody').html(`
+                                    <div class="container-box">
+                                        <div class="img-position">
+                                            <img src="upload/${response.recipeImage}" alt="${response.recipeName}" class="img-responsive">
+                                        </div>
+                                        <div class="text-container">
+                                            <h3>Category: ${response.category}</h3>
+                                            <h3>Servings: ${response.servings}</h3>
+                                            <h3>Ingredients:</h3>
+                                            <p>${ingredients}</p>
+                                            <h3>Instructions:</h3>
+                                            <p>${instructions}</p>
+                                        </div>
+                                    </div>
+                                `);
+                                $('#recipeModal').modal('show');
+
+                                $('#deleteButton').off('click').on('click', function () {
+                                    $.ajax({
+                                        url: 'DeleteMealPlanServlet',
+                                        method: 'POST',
+                                        data: {mealPlanId: event.id},
+                                        success: function () {
+                                            $('#recipeModal').modal('hide');
+                                            $('#calendar').fullCalendar('refetchEvents');
+                                        }
+                                    });
+                                });
+                            }
+                        });
                     }
                 });
 

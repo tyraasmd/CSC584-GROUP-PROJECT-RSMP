@@ -128,10 +128,10 @@
         <header class="header">
             <nav class="nav">
                 <ul>
-                    <li><a href="index.html">Dashboard</a></li>
-                    <li><a href="browseRecipe.html">Browse Recipe</a></li>
-                    <li><a href="mealPlanner.html">Meal Planner</a></li>
-                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="index.jsp">Dashboard</a></li>
+                    <li><a href="browseRecipe.jsp">Browse Recipe</a></li>
+                    <li><a href="mealPlanner.jsp">Meal Planner</a></li>
+                    <li><a href="profile.jsp">Profile</a></li>
                 </ul>
             </nav>
         </header>
