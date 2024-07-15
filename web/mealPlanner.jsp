@@ -96,19 +96,22 @@
                 margin-right: 10px;
             }
             .breakfast {
-                background-color: #f7cac9;
+                background-color: #D5A6BD;
             }
             .lunch {
-                background-color: #dec2cb;
+                background-color: #D3B9A3;
             }
             .snack {
-                background-color: #c5b9cd;
+                background-color: #8E9CB5;
             }
             .dinner {
-                background-color: #abb1cf;
+                background-color: #8FB98B;
             }
             .legend-label {
                 margin-right: 80px;
+            }
+            .fc-today {
+                background-color: #DDE7F2 !important; /* Change this color to your desired color */
             }
         </style>
     </head>
@@ -184,15 +187,15 @@
                 function getCategoryColor(category) {
                     switch (category) {
                         case 'breakfast':
-                            return '#f7cac9';
+                            return '#D5A6BD';
                         case 'lunch':
-                            return '#dec2cb';
+                            return '#D3B9A3';
                         case 'snacks':
-                            return '#c5b9cd';
+                            return '#8E9CB5';
                         case 'dinner':
-                            return '#abb1cf';
+                            return '#8FB98B';
                         default:
-                            return '#92a8d1';
+                            return '#B8CAE8';
                     }
                 }
             });
