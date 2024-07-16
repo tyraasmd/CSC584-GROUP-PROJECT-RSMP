@@ -81,4 +81,29 @@ public class RecipeDAO {
         }
         return null;
     }
+    public List<Recipe> getRecipesByUserId(int userId) {
+        Connection conn = DBConnection.getConnection();
+        String sql = "SELECT * FROM recipes WHERE user_id = ?";
+        List<Recipe> recipes = new ArrayList<>();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Recipe recipe = new Recipe();
+                recipe.setRecipeId(rs.getInt("recipe_id"));
+                recipe.setUserId(rs.getInt("user_id"));
+                recipe.setRecipeName(rs.getString("recipe_name"));
+                recipe.setRecipeImage(rs.getString("recipe_image"));
+                recipe.setRecipeDescription(rs.getString("recipe_description"));
+                recipe.setCategory(rs.getString("category"));
+                recipe.setServings(rs.getInt("servings"));
+                recipe.setIngredients(rs.getString("ingredients"));
+                recipe.setInstructions(rs.getString("instructions"));
+                recipes.add(recipe);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return recipes;
+    }
 }

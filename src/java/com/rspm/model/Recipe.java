@@ -1,8 +1,10 @@
 package com.rspm.model;
 
+import java.util.Date;
+
 public class Recipe {
 
-    private int recipeId; // Add this field
+    private int recipeId;
     private int userId;
     private String recipeName;
     private String recipeImage;
@@ -11,13 +13,14 @@ public class Recipe {
     private int servings;
     private String ingredients;
     private String instructions;
+    private Date recipeCreated; // Add this field
 
     // Getters and setters for all fields
-    public int getRecipeId() { // Add this getter
+    public int getRecipeId() {
         return recipeId;
     }
 
-    public void setRecipeId(int recipeId) { // Add this setter
+    public void setRecipeId(int recipeId) {
         this.recipeId = recipeId;
     }
 
@@ -83,5 +86,13 @@ public class Recipe {
 
     public void setInstructions(String instructions) {
         this.instructions = instructions;
+    }
+
+    public Date getRecipeCreated() {
+        return recipeCreated;
+    }
+
+    public void setRecipeCreated(Date recipeCreated) {
+        this.recipeCreated = recipeCreated;
     }
 }
