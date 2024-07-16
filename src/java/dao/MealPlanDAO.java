@@ -88,4 +88,95 @@ public class MealPlanDAO {
         }
         return mealPlans;
     }
+    
+    public MealPlan getMealPlanById(int mealPlanId) {
+        Connection conn = DBConnection.getConnection();
+        String sql = "SELECT * FROM meal_plans WHERE meal_plan_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, mealPlanId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                MealPlan mealPlan = new MealPlan();
+                mealPlan.setMealPlanId(rs.getInt("meal_plan_id"));
+                mealPlan.setUserId(rs.getInt("user_id"));
+                mealPlan.setMealDate(rs.getString("meal_date"));
+                mealPlan.setCategory(rs.getString("category"));
+                mealPlan.setRecipeId(rs.getInt("recipe_id"));
+                return mealPlan;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public List<MealPlan> getMealPlansWithRecipesByUserId(int userId) {
+        Connection conn = DBConnection.getConnection();
+        String sql = "SELECT mp.meal_plan_id, mp.user_id, mp.meal_date, mp.category, r.recipe_id, r.recipe_name "
+                + "FROM meal_plans mp "
+                + "JOIN meal_plan_recipes mpr ON mp.meal_plan_id = mpr.meal_plan_id "
+                + "JOIN recipes r ON mpr.recipe_id = r.recipe_id "
+                + "WHERE mp.user_id = ?";
+        List<MealPlan> mealPlans = new ArrayList<>();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                MealPlan mealPlan = new MealPlan();
+                mealPlan.setMealPlanId(rs.getInt("meal_plan_id"));
+                mealPlan.setUserId(rs.getInt("user_id"));
+                mealPlan.setMealDate(rs.getString("meal_date"));
+                mealPlan.setCategory(rs.getString("category"));
+                mealPlan.setRecipeId(rs.getInt("recipe_id"));
+                mealPlan.setRecipeName(rs.getString("recipe_name"));
+                mealPlans.add(mealPlan);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mealPlans;
+    }
+    public boolean deleteMealPlanRecipe(int mealPlanId, int recipeId) {
+        Connection conn = DBConnection.getConnection();
+        String sql = "DELETE FROM meal_plan_recipes WHERE meal_plan_id = ? AND recipe_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, mealPlanId);
+            stmt.setInt(2, recipeId);
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows > 0) {
+                if (!mealPlanHasRecipes(mealPlanId)) {
+                    deleteMealPlan(mealPlanId);
+                }
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean mealPlanHasRecipes(int mealPlanId) {
+        Connection conn = DBConnection.getConnection();
+        String sql = "SELECT COUNT(*) FROM meal_plan_recipes WHERE meal_plan_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, mealPlanId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private void deleteMealPlan(int mealPlanId) {
+        Connection conn = DBConnection.getConnection();
+        String sql = "DELETE FROM meal_plans WHERE meal_plan_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, mealPlanId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

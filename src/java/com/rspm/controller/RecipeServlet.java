@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,8 +36,18 @@ public class RecipeServlet extends HttpServlet {
         int servings = Integer.parseInt(request.getParameter("servings"));
         String ingredients = request.getParameter("ingredients");
         String instructions = request.getParameter("instructions");
-        int userId = 1; // Assuming user_id is 1 for now, you should replace it with the actual user id
 
+        // Retrieve user ID from session
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("userId");
+
+        if (userId == null) {
+            LOGGER.log(Level.SEVERE, "User ID not found in session. Redirecting to login.");
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
+        LOGGER.log(Level.INFO, "User ID: " + userId);
         LOGGER.log(Level.INFO, "Recipe Name: " + recipeName);
         LOGGER.log(Level.INFO, "Recipe Image Part: " + recipeImagePart);
         LOGGER.log(Level.INFO, "Recipe Description: " + recipeDescription);

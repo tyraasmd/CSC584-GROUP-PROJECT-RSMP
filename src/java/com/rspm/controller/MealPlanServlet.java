@@ -25,7 +25,7 @@ public class MealPlanServlet extends HttpServlet {
         }
 
         MealPlanDAO mealPlanDAO = new MealPlanDAO();
-        List<MealPlan> mealPlans = mealPlanDAO.getMealPlansByUserId(userId);
+        List<MealPlan> mealPlans = mealPlanDAO.getMealPlansWithRecipesByUserId(userId);
 
         // Manually create the JSON string
         StringBuilder json = new StringBuilder("[");
@@ -35,7 +35,9 @@ public class MealPlanServlet extends HttpServlet {
                     .append("\"mealPlanId\":").append(mealPlan.getMealPlanId()).append(",")
                     .append("\"userId\":").append(mealPlan.getUserId()).append(",")
                     .append("\"mealDate\":\"").append(mealPlan.getMealDate()).append("\",")
-                    .append("\"category\":\"").append(mealPlan.getCategory()).append("\"")
+                    .append("\"category\":\"").append(mealPlan.getCategory()).append("\",")
+                    .append("\"recipeId\":").append(mealPlan.getRecipeId()).append(",")
+                    .append("\"recipeName\":\"").append(mealPlan.getRecipeName()).append("\"")
                     .append("}");
             if (i < mealPlans.size() - 1) {
                 json.append(",");

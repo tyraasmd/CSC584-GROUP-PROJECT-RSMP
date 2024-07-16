@@ -160,9 +160,17 @@
                     </div>
                     <div class="modal-body" id="modalBody">
                         <!-- Recipe details will be loaded here dynamically -->
+                        <div class="text-container">
+                            <h3>Category: <span id="recipeCategory"></span></h3>
+                            <h3>Servings: <span id="recipeServings"></span></h3>
+                            <h3>Ingredients:</h3>
+                            <p id="recipeIngredients"></p>
+                            <h3>Instructions:</h3>
+                            <p id="recipeInstructions"></p>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="deleteButton">Delete</button>
+                        <button type="button" class="btn btn-danger" id="deleteButton" onclick="deleteMealPlanRecipe()">Delete</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -170,92 +178,96 @@
         </div>
 
         <script>
-            $(document).ready(function () {
-                $('#calendar').fullCalendar({
-                    header: {
-                        left: '',
-                        center: 'title',
-                        right: 'prev, today, next'
-                    },
-                    buttonText: {
-                        today: 'Today'
-                    },
-                    events: function (start, end, timezone, callback) {
-                        $.ajax({
-                            url: 'MealPlanServlet',
-                            dataType: 'json',
-                            success: function (data) {
-                                var events = [];
-                                $(data).each(function () {
-                                    events.push({
-                                        title: this.category,
-                                        start: this.mealDate,
-                                        color: getCategoryColor(this.category),
-                                        id: this.mealPlanId
-                                    });
-                                });
-                                callback(events);
-                            }
-                        });
-                    },
-                    eventClick: function (event) {
-                        // Fetch recipe details and display in modal
-                        $.ajax({
-                            url: 'GetRecipeDetailsServlet',
-                            method: 'GET',
-                            data: {mealPlanId: event.id},
-                            success: function (response) {
-                                const ingredients = response.ingredients.replace(/\n/g, '<br><br>');
-                                const instructions = response.instructions.replace(/\n/g, '<br><br>');
-                                $('#modalTitle').text(response.recipeName);
-                                $('#modalBody').html(`
-                                    <div class="container-box">
-                                        <div class="img-position">
-                                            <img src="upload/${response.recipeImage}" alt="${response.recipeName}" class="img-responsive">
-                                        </div>
-                                        <div class="text-container">
-                                            <h3>Category: ${response.category}</h3>
-                                            <h3>Servings: ${response.servings}</h3>
-                                            <h3>Ingredients:</h3>
-                                            <p>${ingredients}</p>
-                                            <h3>Instructions:</h3>
-                                            <p>${instructions}</p>
-                                        </div>
-                                    </div>
-                                `);
-                                $('#recipeModal').modal('show');
+    var currentMealPlanId;
+    var currentRecipeId;
 
-                                $('#deleteButton').off('click').on('click', function () {
-                                    $.ajax({
-                                        url: 'DeleteMealPlanServlet',
-                                        method: 'POST',
-                                        data: {mealPlanId: event.id},
-                                        success: function () {
-                                            $('#recipeModal').modal('hide');
-                                            $('#calendar').fullCalendar('refetchEvents');
-                                        }
-                                    });
-                                });
-                            }
+    $(document).ready(function () {
+        $('#calendar').fullCalendar({
+            header: {
+                left: '',
+                center: 'title',
+                right: 'prev, today, next'
+            },
+            buttonText: {
+                today: 'Today'
+            },
+            events: function (start, end, timezone, callback) {
+                $.ajax({
+                    url: 'MealPlanServlet',
+                    dataType: 'json',
+                    success: function (data) {
+                        var events = [];
+                        $(data).each(function () {
+                            events.push({
+                                title: this.recipeName,
+                                start: this.mealDate,
+                                color: getCategoryColor(this.category),
+                                id: this.mealPlanId,
+                                recipeId: this.recipeId
+                            });
                         });
+                        callback(events);
                     }
                 });
+            },
+            eventRender: function (event, element) {
+                element.find('.fc-content').css('cursor', 'pointer');
+            },
+            eventClick: function (event) {
+                currentMealPlanId = event.id;
+                currentRecipeId = event.recipeId;
+                $.ajax({
+                    url: 'GetRecipeDetailsServlet',
+                    data: { id: event.recipeId },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#modalTitle').text(data.recipeName);
+                        $('#recipeCategory').text(data.category);
+                        $('#recipeServings').text(data.servings);
+                        $('#recipeIngredients').html(data.ingredients.replace(/\n/g, '<br>'));
+                        $('#recipeInstructions').html(data.instructions.replace(/\n/g, '<br>'));
+                        $('#recipeModal').modal('show');
+                    }
+                });
+            }
+        });
+    });
 
-                function getCategoryColor(category) {
-                    switch (category) {
-                        case 'breakfast':
-                            return '#D5A6BD';
-                        case 'lunch':
-                            return '#D3B9A3';
-                        case 'snacks':
-                            return '#8E9CB5';
-                        case 'dinner':
-                            return '#8FB98B';
-                        default:
-                            return '#B8CAE8';
+    function getCategoryColor(category) {
+        switch (category) {
+            case 'breakfast':
+                return '#D5A6BD';
+            case 'lunch':
+                return '#D3B9A3';
+            case 'snacks':
+                return '#8E9CB5';
+            case 'dinner':
+                return '#8FB98B';
+            default:
+                return '#B8CAE8';
+        }
+    }
+
+    function deleteMealPlanRecipe() {
+        if (confirm('Are you sure you want to delete this recipe from the meal plan?')) {
+            $.ajax({
+                url: 'DeleteMealPlanRecipeServlet',
+                type: 'POST',
+                data: {
+                    mealPlanId: currentMealPlanId,
+                    recipeId: currentRecipeId
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $('#recipeModal').modal('hide');
+                        $('#calendar').fullCalendar('refetchEvents');
+                    } else {
+                        alert('Failed to delete the recipe. Please try again.');
                     }
                 }
             });
+        }
+    }
         </script>
     </body>
 </html>
