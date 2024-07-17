@@ -20,6 +20,10 @@
         <servlet-name>DeleteMealPlanRecipeServlet</servlet-name>
         <servlet-class>com.rspm.controller.DeleteMealPlanRecipeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FetchRecipesServlet</servlet-name>
+        <servlet-class>com.rspm.controller.FetchRecipesServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterAccountServlet</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>DeleteMealPlanRecipeServlet</servlet-name>
         <url-pattern>/DeleteMealPlanRecipeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FetchRecipesServlet</servlet-name>
+        <url-pattern>/fetchRecipes</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

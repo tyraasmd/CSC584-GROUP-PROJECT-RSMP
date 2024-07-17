@@ -1,9 +1,11 @@
+<%-- 
+    Document   : profile
+    Created on : Jun 28, 2024, 12:56:14 AM
+    Author     : HP
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.rspm.model.Recipe" %>
-<%@ page import="com.rspm.model.User" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,14 +24,14 @@
             }
 
             /* Header styling */
-            .header {
+            .header { /* A light blue color */
                 color: white;
                 padding: 20px 0;
                 text-align: center;
             }
 
             /* Navigation bar styling */
-            .nav {
+            .nav { /* Same light blue as header */
                 color: white;
                 padding: 8px 0;
                 text-align: right;
@@ -54,18 +56,18 @@
             }
 
             .nav a:hover {
-                color: #296AAE;
+                color: #296AAE; /* A darker blue color */
             }
 
             .ui-w-80 {
-                width: 80px !important;
+                width : 80px !important;
                 height: auto;
             }
 
             .btn-default {
                 border-color: rgba(24, 28, 33, 0.1);
-                background: rgba(0, 0, 0, 0);
-                color: #4E5155;
+                background  : rgba(0, 0, 0, 0);
+                color       : #4E5155;
             }
 
             label.btn {
@@ -74,8 +76,8 @@
 
             .btn-outline-primary {
                 border-color: #26B4FF;
-                background: transparent;
-                color: #26B4FF;
+                background  : transparent;
+                color       : #26B4FF;
             }
 
             .btn {
@@ -88,7 +90,7 @@
 
             .card {
                 background-clip: padding-box;
-                box-shadow: 0 1px 4px rgba(24, 28, 33, 0.012);
+                box-shadow     : 0 1px 4px rgba(24, 28, 33, 0.012);
             }
 
             .row-bordered {
@@ -96,11 +98,11 @@
             }
 
             .account-settings-fileinput {
-                position: absolute;
+                position  : absolute;
                 visibility: hidden;
-                width: 1px;
-                height: 1px;
-                opacity: 0;
+                width     : 1px;
+                height    : 1px;
+                opacity   : 0;
             }
 
             .account-settings-links .list-group-item.active {
@@ -117,7 +119,7 @@
             }
 
             .light-style .account-settings-links .list-group-item {
-                padding: 0.85rem 1.5rem;
+                padding     : 0.85rem 1.5rem;
                 border-color: rgba(24, 28, 33, 0.03) !important;
             }
 
@@ -126,7 +128,7 @@
             }
 
             .material-style .account-settings-links .list-group-item {
-                padding: 0.85rem 1.5rem;
+                padding     : 0.85rem 1.5rem;
                 border-color: rgba(24, 28, 33, 0.03) !important;
             }
 
@@ -135,7 +137,7 @@
             }
 
             .dark-style .account-settings-links .list-group-item {
-                padding: 0.85rem 1.5rem;
+                padding     : 0.85rem 1.5rem;
                 border-color: rgba(255, 255, 255, 0.03) !important;
             }
 
@@ -148,7 +150,7 @@
             }
 
             .light-style .account-settings-links .list-group-item {
-                padding: 0.85rem 1.5rem;
+                padding     : 0.85rem 1.5rem;
                 border-color: rgba(24, 28, 33, 0.03) !important;
             }
 
@@ -173,22 +175,18 @@
             .history h1 {
                 text-align: center;
             }
-
             .history ul {
                 list-style-type: none;
                 padding: 0;
             }
-
             .history li {
                 border-bottom: 1px solid #ccc;
                 padding: 10px 0;
             }
-
             .pagination {
                 text-align: center;
                 margin-top: 20px;
             }
-
             .pagination a {
                 text-decoration: none;
                 color: #333;
@@ -196,7 +194,6 @@
                 border: 1px solid #ccc;
                 margin: 0 5px;
             }
-
             .pagination a.active {
                 background-color: #333;
                 color: #fff;
@@ -204,8 +201,8 @@
 
             .recipe-container {
                 display: flex;
-                flex-direction: column;
-                width: 800px;
+                flex-direction: column; /* Stack elements vertically */
+                width: 800px; /* Adjust width as needed */
                 margin: 50px auto;
                 padding: 20px;
                 padding-top: 10px;
@@ -213,18 +210,17 @@
 
             table {
                 width: 80%;
-                border-collapse: collapse;
+                border-collapse: collapse; /* Removes borders between cells */
             }
 
-            th,
-            td {
+            th, td {
                 padding: 10px;
-                border: 1px solid #ddd;
-                text-align: left;
+                border: 1px solid #ddd; /* Adds a light gray border */
+                text-align: left; /* Left-align content */
             }
 
             th {
-                background-color: #f2f2f2;
+                background-color: #f2f2f2; /* Light gray background for headers */
             }
 
             .btn {
@@ -234,21 +230,21 @@
                 cursor: pointer;
                 position: relative;
             }
-
             .btn-view {
                 background-color: forestgreen;
                 color: white;
             }
 
             .btn-update {
-                background-color: #296AAE;
+                background-color: #296AAE; /* Light blue */
                 color: white;
             }
 
             .btn-delete {
-                background-color: #FF0000;
+                background-color: #FF0000; /* Red */
                 color: white;
             }
+
         </style>
     </head>
 
@@ -257,10 +253,10 @@
             <nav class="nav">
                 <div class="container2">
                     <ul>
-                        <li><a href="index.jsp">Dashboard</a></li>
-                        <li><a href="browseRecipe.jsp">Browse Recipe</a></li>
-                        <li><a href="mealPlanner.jsp">Meal Planner</a></li>
-                        <li><a href="profile.jsp">Profile</a></li>
+                        <li><a href="index.html">Dashboard</a></li>
+                        <li><a href="browseRecipe.html">Browse Recipe</a></li>
+                        <li><a href="mealPlanner.html">Meal Planner</a></li>
+                        <li><a href="profile.html">Profile</a></li>
                     </ul>
                 </div>
             </nav>
@@ -269,30 +265,20 @@
             <h4 class="font-weight-bold mb-4">
                 User Profile
             </h4>
-            <c:if test="${not empty successMessage}">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    ${successMessage}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </c:if>
-            <c:if test="${not empty errorMessage}">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    ${errorMessage}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </c:if>
             <div class="card overflow-hidden">
                 <div class="row no-gutters row-bordered row-border-light">
                     <div class="col-md-3 pt-0">
                         <div class="list-group list-group-flush account-settings-links">
-                            <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change Password</a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-my-recipe">My Recipe</a>
-                            <a class="list-group-item list-group-item-action" style="background:red; color: white" data-toggle="list" href="#" onclick="confirmLogout()">Logout</a>
+                            <a class="list-group-item list-group-item-action active" data-toggle="list"
+                               href="#account-general">General</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list"
+                               href="#account-change-password">Change password</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list"
+                               href="#account-my-recipe">My Recipe</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list"
+                               href="#account-history">History</a>
+                            <a class="list-group-item list-group-item-action" style="background:red; color: white" data-toggle="list"
+                               href="#account-connections">Log Out</a>
                         </div>
                     </div>
                     <div class="col-md-9">
@@ -300,41 +286,42 @@
                             <div class="tab-pane fade active show" id="account-general">
                                 <hr class="border-light m-0">
                                 <div class="card-body">
-                                    <form action="profile" method="post">
-                                        <div class="form-group">
-                                            <label class="form-label">Username</label>
-                                            <input type="text" class="form-control mb-1" name="username" value="${username}" readonly>
+                                    <div class="form-group">
+                                        <label class="form-label">Username</label>
+                                        <input type="text" class="form-control mb-1" value="tyraaaa">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">E-mail</label>
+                                        <input type="text" class="form-control mb-1" value="tyraaaa@mail.com">
+                                        <div class="alert alert-warning mt-3">
+                                            Your email is not confirmed. Please check your inbox.<br>
+                                            <a href="javascript:void(0)">Resend confirmation</a>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="form-label">New E-mail</label>
-                                            <input type="email" class="form-control mb-1" name="newEmail" value="${email}" required>
-                                        </div>
-                                        <input type="hidden" name="action" value="updateEmail">
-                                        <div class="text-right mt-3">
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                            <button type="button" class="btn btn-default">Cancel</button>
-                                        </div>
-                                    </form>
+                                    </div>
+                                    <div class="text-right mt-3">
+                                        <button type="button" class="btn btn-primary">Save changes</button>&nbsp;
+                                        <button type="button" class="btn btn-default">Cancel</button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="account-change-password">
-                                <div class="card-body">
-                                    <form action="profile" method="post">
-                                        <input type="hidden" name="action" value="changePassword">
-                                        <div class="form-group">
-                                            <label class="form-label">Current Password</label>
-                                            <input type="password" class="form-control" name="oldPassword" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">New Password</label>
-                                            <input type="password" class="form-control" name="newPassword" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Repeat New Password</label>
-                                            <input type="password" class="form-control" name="confirmPassword" required>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Update Password</button>
-                                    </form>
+                                <div class="card-body pb-2">
+                                    <div class="form-group">
+                                        <label class="form-label">Current password</label>
+                                        <input type="password" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">New password</label>
+                                        <input type="password" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Repeat new password</label>
+                                        <input type="password" class="form-control">
+                                    </div>
+                                    <div class="text-right mt-3">
+                                        <button type="button" class="btn btn-primary">Save changes</button>&nbsp;
+                                        <button type="button" class="btn btn-default">Cancel</button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="account-my-recipe">
@@ -351,15 +338,55 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach var="recipe" items="${recipes}">
-                                                <tr>
-                                                    <td><fmt:formatDate value="${recipe.dateCreated}" pattern="yyyy-MM-dd" /></td>
-                                            <td>${recipe.recipeName}</td>
-                                            <td>${recipe.category}</td>
-                                            <td><button class="btn btn-update">Update</button></td>
-                                            <td><button class="btn btn-delete">Delete</button></td>
+                                        <c:forEach var="recipe" items="${recipes}">
+                                            <tr>
+                                                <td>${recipe.recipeCreated}</td>
+                                                <td>${recipe.recipeName}</td>
+                                                <td>${recipe.category}</td>
+                                                <td><button class="btn btn-update">Update</button></td>
+                                                <td><button class="btn btn-delete">Delete</button></td>
                                             </tr>
                                         </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </section>
+                            </div>
+                            <div class="tab-pane fade" id="account-history">
+                                <section class="recipe-container">
+                                    <h2>History</h2>
+                                    <div class="date">
+                                        <label for="date">Select Date:</label>
+                                        <input type="date" id="date" name="date"><br><br>
+                                    </div>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Recipe Name</th>
+                                                <th>Categories</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Scrambled Eggs with Toast</td>
+                                                <td>Breakfast</td>
+                                                <td><button class="btn btn-delete">Delete</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mee goreng</td>
+                                                <td>Dinner</td>
+                                                <td><button class="btn btn-delete">Delete</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Ondeh-ondeh</td>
+                                                <td>Snacks</td>
+                                                <td><button class="btn btn-delete">Delete</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nasi Lemak</td>
+                                                <td>Breakfast</td>
+                                                <td><button class="btn btn-delete">Delete</button></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </section>
@@ -372,13 +399,6 @@
         <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-                                function confirmLogout() {
-                                    if (confirm("Are you sure you want to logout?")) {
-                                        window.location.href = "LogoutServlet";
-                                    }
-                                }
-        </script>
     </body>
 
 </html>

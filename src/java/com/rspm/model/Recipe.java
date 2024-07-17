@@ -87,12 +87,4 @@ public class Recipe {
     public void setInstructions(String instructions) {
         this.instructions = instructions;
     }
-
-    public Date getRecipeCreated() {
-        return recipeCreated;
-    }
-
-    public void setRecipeCreated(Date recipeCreated) {
-        this.recipeCreated = recipeCreated;
-    }
 }
