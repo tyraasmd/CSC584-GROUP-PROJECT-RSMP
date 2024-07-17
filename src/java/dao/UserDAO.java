@@ -16,7 +16,7 @@ public class UserDAO {
     private static final String INSERT_USERS_SQL = "INSERT INTO users (username, email, password) VALUES (?, ?, ?);";
     private static final String SELECT_USER_BY_CREDENTIALS = "SELECT * FROM users WHERE username = ? AND password = ?;";
     private static final String SELECT_USER_ID_BY_USERNAME = "SELECT user_id FROM users WHERE username = ?;";
-    private static final String UPDATE_USER_SQL = "UPDATE users SET email = ? WHERE user_id = ?;";
+   //private static final String UPDATE_USER_SQL = "UPDATE users SET email = ? WHERE user_id = ?;";
     private static final String SELECT_USER_BY_USERNAME = "SELECT * FROM users WHERE username = ?;";
 
     protected Connection getConnection() {
@@ -88,8 +88,9 @@ public class UserDAO {
     }
 
     public boolean updateUserEmail(User user) throws SQLException {
+        String query = "UPDATE users SET email = ? WHERE user_id = ?";
         try (Connection connection = getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_SQL)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setInt(2, user.getUserId());
             int rowsUpdated = preparedStatement.executeUpdate();

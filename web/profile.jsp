@@ -250,7 +250,7 @@
             <nav class="nav">
                 <div class="container2">
                     <ul>
-                        <li><a href="index.jsp">Dashboard</a></li>
+                        <li><a href="index">Dashboard</a></li>
                         <li><a href="browseRecipe.jsp">Browse Recipe</a></li>
                         <li><a href="mealPlanner.jsp">Meal Planner</a></li>
                         <li><a href="profile.jsp">Profile</a></li>
