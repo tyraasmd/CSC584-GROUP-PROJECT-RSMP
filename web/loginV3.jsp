@@ -94,7 +94,6 @@
         </form>
         <div class="links">
             <a href="registerAccount.jsp">Register Account</a>
-            <a href="forgotPassword-1.jsp">Forgot Password</a>
         </div>
     </div>
 </body>

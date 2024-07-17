@@ -138,7 +138,7 @@
             <div class='cards'>
                 <div class='card'>
                     <div class='card-content'>
-                        <div class='number'>10</div>
+                        <div class='number'>${totalRecipes}</div>
                         <div class='card-name'>Recipes</div>
                     </div>
                     <div class='icon-box'>
@@ -147,7 +147,7 @@
                 </div>
                 <div class='card'>
                     <div class='card-content'>
-                        <div class='number'>3</div>
+                        <div class='number'>${breakfastRecipes}</div>
                         <div class='card-name'>Breakfast</div>
                     </div>
                     <div class='icon-box'>
@@ -156,7 +156,7 @@
                 </div>
                 <div class="card">
                     <div class="card-content">
-                        <div class="number">2</div>
+                        <div class="number">${lunchRecipes}</div>
                         <div class="card-name">Lunch</div>
                     </div>
                     <div class="icon-box">
@@ -165,8 +165,8 @@
                 </div>
                 <div class="card">
                     <div class="card-content">
-                        <div class="number">2</div>
-                        <div class="card-name">Snack</div>
+                        <div class="number">${snackRecipes}</div>
+                        <div class="card-name">Snacks</div>
                     </div>
                     <div class="icon-box">
                         <i span class="material-symbols-outlined">icecream</i>
@@ -174,7 +174,7 @@
                 </div>
                 <div class="card">
                     <div class="card-content">
-                        <div class="number">3</div>
+                        <div class="number">${dinnerRecipes}</div>
                         <div class="card-name">Dinner</div>
                     </div>
                     <div class="icon-box">

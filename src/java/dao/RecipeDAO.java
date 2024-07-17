@@ -106,4 +106,32 @@ public class RecipeDAO {
         }
         return recipes;
     }
+    public int countTotalRecipes() {
+        Connection conn = DBConnection.getConnection();
+        String sql = "SELECT COUNT(*) FROM recipes";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int countRecipesByCategory(String category) {
+        Connection conn = DBConnection.getConnection();
+        String sql = "SELECT COUNT(*) FROM recipes WHERE category = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, category);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("userId", userId); // Set userId in session
 
             LOGGER.log(Level.INFO, "Login successful for username: {0}, userId: {1}", new Object[]{username, userId});
-            response.sendRedirect("index.jsp"); // Redirect to index.jsp
+            response.sendRedirect("index"); // Redirect to index.jsp
         } else {
             LOGGER.log(Level.WARNING, "Login failed for username: {0}", username);
             response.sendRedirect("loginV3.jsp?error=1");

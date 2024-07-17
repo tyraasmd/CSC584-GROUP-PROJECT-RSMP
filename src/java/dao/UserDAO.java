@@ -16,6 +16,8 @@ public class UserDAO {
     private static final String INSERT_USERS_SQL = "INSERT INTO users (username, email, password) VALUES (?, ?, ?);";
     private static final String SELECT_USER_BY_CREDENTIALS = "SELECT * FROM users WHERE username = ? AND password = ?;";
     private static final String SELECT_USER_ID_BY_USERNAME = "SELECT user_id FROM users WHERE username = ?;";
+    private static final String UPDATE_USER_SQL = "UPDATE users SET email = ? WHERE user_id = ?;";
+    private static final String SELECT_USER_BY_USERNAME = "SELECT * FROM users WHERE username = ?;";
 
     protected Connection getConnection() {
         Connection connection = null;
@@ -66,5 +68,47 @@ public class UserDAO {
             e.printStackTrace();
         }
         return userId;
+    }
+    public User getUserByUsername(String username) {
+        User user = null;
+        try (Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_USERNAME)) {
+            preparedStatement.setString(1, username);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                user = new User();
+                user.setUserId(rs.getInt("user_id"));
+                user.setUsername(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public boolean updateUserEmail(User user) throws SQLException {
+        try (Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_SQL)) {
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setInt(2, user.getUserId());
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean changeUserPassword(String username, String oldPassword, String newPassword) throws SQLException {
+        String query = "UPDATE users SET password = ? WHERE username = ? AND password = ?";
+        try (Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, newPassword);
+            preparedStatement.setString(2, username);
+            preparedStatement.setString(3, oldPassword);
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated > 0;
+        }
     }
 }

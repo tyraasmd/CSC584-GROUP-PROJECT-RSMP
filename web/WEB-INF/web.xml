@@ -24,6 +24,18 @@
         <servlet-name>FetchRecipesServlet</servlet-name>
         <servlet-class>com.rspm.controller.FetchRecipesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>com.rspm.controller.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.rspm.controller.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>IndexServlet</servlet-name>
+        <servlet-class>com.rspm.controller.IndexServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterAccountServlet</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -79,6 +91,18 @@
     <servlet-mapping>
         <servlet-name>FetchRecipesServlet</servlet-name>
         <url-pattern>/fetchRecipes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IndexServlet</servlet-name>
+        <url-pattern>/index</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
